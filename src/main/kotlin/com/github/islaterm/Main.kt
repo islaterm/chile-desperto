@@ -39,16 +39,18 @@ fun main() {
                     urls.add(link)
                 }
                 val currentTime = System.currentTimeMillis()
-                if (currentTime != lastUpdate && (currentTime mod 10000L) == 0)
-                linksFile.writeText(urls.joinToString(System.lineSeparator()))
-                var process = runtime.exec("git.exe status")
-                BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("git.exe commit -a -m \"Updated links\" ")
-                BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("git.exe pull origin master")
-                BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("git.exe push origin master")
-                BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
+                if (currentTime != lastUpdate && (currentTime.rem(10000)) == 0L) {
+                    lastUpdate = currentTime
+                    linksFile.writeText(urls.joinToString(System.lineSeparator()))
+                    var process = runtime.exec("git.exe status")
+                    BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
+                    process = runtime.exec("git.exe commit -a -m \"Updated links\" ")
+                    BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
+                    process = runtime.exec("git.exe pull origin master")
+                    BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
+                    process = runtime.exec("git.exe push origin master")
+                    BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
+                }
             }
         }
     }
