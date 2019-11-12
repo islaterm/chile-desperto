@@ -34,7 +34,6 @@ class ChileDesperto {
             }
             val key = Yaml().load<Map<String, String>>(File("src/main/resources/token.yaml").readText())
             val bot = bot {
-                logLevel = HttpLoggingInterceptor.Level.NONE
                 token = key["token"] ?: error("")
                 dispatch {
                     message(Filter.All) { _, update ->
