@@ -29,11 +29,6 @@ fun main() {
     if (!linksFile.exists()) {
         linksFile.createNewFile()
     }
-    File("C:\\Users\\Ignacio\\Documents\\archivando").listFiles()!!.forEach {
-        if (it.name.contains("html")) {
-            handler.parseUpdate(it.readText())
-        }
-    }
     val key = Yaml().load<Map<String, String>>(File("src/main/resources/token.yaml").readText())
     val bot = bot {
         logLevel = HttpLoggingInterceptor.Level.NONE
