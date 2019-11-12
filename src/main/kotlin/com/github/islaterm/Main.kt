@@ -25,35 +25,40 @@ val handler = UpdateHandler()
 val urls = mutableSetOf<String>()
 val linksFile = File("links.txt")
 
-fun main() {
-    if (!linksFile.exists()) {
-        linksFile.createNewFile()
-    }
-    val key = Yaml().load<Map<String, String>>(File("src/main/resources/token.yaml").readText())
-    val bot = bot {
-        logLevel = HttpLoggingInterceptor.Level.NONE
-        token = key["token"] ?: error("")
-        dispatch {
-            message(Filter.All) { _, update ->
-                val text = update.message?.text ?: update.message?.caption ?: ""
-                handler.parseUpdate(text)
+class ChileDesperto {
+    companion object {
+        @JvmStatic
+        fun main(vararg args: String) {
+            if (!linksFile.exists()) {
+                linksFile.createNewFile()
             }
-            channel { _, update ->
-                val text = update.channelPost?.text ?: update.channelPost?.caption ?: ""
-                handler.parseUpdate(text)
+            val key = Yaml().load<Map<String, String>>(File("src/main/resources/token.yaml").readText())
+            val bot = bot {
+                logLevel = HttpLoggingInterceptor.Level.NONE
+                token = key["token"] ?: error("")
+                dispatch {
+                    message(Filter.All) { _, update ->
+                        val text = update.message?.text ?: update.message?.caption ?: ""
+                        handler.parseUpdate(text)
+                    }
+                    channel { _, update ->
+                        val text = update.channelPost?.text ?: update.channelPost?.caption ?: ""
+                        handler.parseUpdate(text)
+                    }
+                }
             }
-        }
-    }
-    timer("Git sync", period = 300_000L, action = object : TimerTask(), (TimerTask) -> Unit {
-        override fun run() {
-            handler.sync()
-        }
+            timer("Git sync", period = 300_000L, action = object : TimerTask(), (TimerTask) -> Unit {
+                override fun run() {
+                    handler.sync()
+                }
 
-        override fun invoke(p1: TimerTask) {
-            handler.sync()
+                override fun invoke(p1: TimerTask) {
+                    handler.sync()
+                }
+            })
+            bot.startPolling()
         }
-    })
-    bot.startPolling()
+    }
 }
 
 class UpdateHandler {
