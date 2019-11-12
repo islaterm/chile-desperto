@@ -40,9 +40,7 @@ fun main() {
                 linksFile.writeText(urls.joinToString(System.lineSeparator()))
                 var process = runtime.exec("git.exe status")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("git.exe add .")
-                BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("git.exe commit -m \"Updated links\" ")
+                process = runtime.exec("git.exe commit -a -m \"Updated links\" ")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
                 process = runtime.exec("git.exe pull origin master")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
