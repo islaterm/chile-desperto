@@ -45,7 +45,7 @@ fun main() {
             }
         }
     }
-    timer("Git sync", period = 10L, action = object : TimerTask(), (TimerTask) -> Unit {
+    timer("Git sync", period = 300_000L, action = object : TimerTask(), (TimerTask) -> Unit {
         override fun run() {
             handler.sync()
         }
