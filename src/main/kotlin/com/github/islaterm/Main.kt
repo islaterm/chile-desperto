@@ -19,6 +19,7 @@ val urlPattern: Pattern = Pattern.compile(
 val runtime: Runtime = Runtime.getRuntime()
 
 fun main() {
+    var lastUpdate = System.currentTimeMillis()
     val linksFile = File("links.txt")
     if (!linksFile.exists()) {
         linksFile.createNewFile()
@@ -37,6 +38,8 @@ fun main() {
                     val link = text.substring(matchStart until matchEnd)
                     urls.add(link)
                 }
+                val currentTime = System.currentTimeMillis()
+                if (currentTime != lastUpdate && (currentTime mod 10000L) == 0)
                 linksFile.writeText(urls.joinToString(System.lineSeparator()))
                 var process = runtime.exec("git.exe status")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
