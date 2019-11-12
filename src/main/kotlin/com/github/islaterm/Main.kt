@@ -46,7 +46,7 @@ fun main() {
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
                 process = runtime.exec("git.exe pull origin master")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-                process = runtime.exec("&& git.exe push origin master")
+                process = runtime.exec("git.exe push origin master")
                 BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
             }
         }
