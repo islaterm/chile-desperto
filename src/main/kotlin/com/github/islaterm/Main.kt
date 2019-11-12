@@ -11,12 +11,12 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.regex.Pattern
 
-val urlPattern = Pattern.compile(
-    "(?:^|[\\W])((ht|f)tp(s?)://|www\\.)(([\\w\\-]+\\.)+?([\\w\\-.~]+\\/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
+val urlPattern: Pattern = Pattern.compile(
+    "(?:^|[\\W])((ht|f)tp(s?)://|www\\.)(([\\w\\-]+\\.)+?([\\w\\-.~]+/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]*$~@!:/{};']*)",
     Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
 )
 
-val runtime = Runtime.getRuntime()
+val runtime: Runtime = Runtime.getRuntime()
 
 fun main() {
     val linksFile = File("links.txt")
