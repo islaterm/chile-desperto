@@ -7,4 +7,6 @@ If you want to send a link to the bot, just send a message with the link to @noe
 
 ## Periodic updates
 
-The ``links.txt`` file is updated every 5 minutes.
+The ``links.txt`` file is updated every 5 minutes. 
+Since the sources of the links and to avoid an exesive use of RAM there's no previous checking of the links added so it's likely to be 
+duplicated links in the data.
