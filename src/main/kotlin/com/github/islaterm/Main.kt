@@ -4,16 +4,15 @@ import me.ivmg.telegram.bot
 import me.ivmg.telegram.dispatch
 import me.ivmg.telegram.dispatcher.channel
 import me.ivmg.telegram.dispatcher.message
-import me.ivmg.telegram.entities.Update
 import me.ivmg.telegram.extensions.filters.Filter
 import okhttp3.logging.HttpLoggingInterceptor
 import org.yaml.snakeyaml.Yaml
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.util.*
 import java.util.regex.Pattern
 import kotlin.concurrent.timer
-import java.util.TimerTask
 
 
 val urlPattern: Pattern = Pattern.compile(
@@ -30,6 +29,7 @@ fun main() {
     if (!linksFile.exists()) {
         linksFile.createNewFile()
     }
+    for (File("C:\\Users\\Ignacio\\Documents\\archivando"))
     val key = Yaml().load<Map<String, String>>(File("src/main/resources/token.yaml").readText())
     val bot = bot {
         logLevel = HttpLoggingInterceptor.Level.NONE
