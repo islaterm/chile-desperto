@@ -78,13 +78,13 @@ class UpdateHandler {
     fun sync() {
         synchronized(this) {
             linksFile.appendText(urls.joinToString(System.lineSeparator()))
-            var process = runtime.exec("git.exe status")
+            var process = runtime.exec("git status")
             BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-            process = runtime.exec("git.exe commit -a -m \"Updated links\" ")
+            process = runtime.exec("git commit -a -m \"Updated links\" ")
             BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-            process = runtime.exec("git.exe pull origin master")
+            process = runtime.exec("git pull origin master")
             BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
-            process = runtime.exec("git.exe push origin master")
+            process = runtime.exec("git push origin master")
             BufferedReader(InputStreamReader(process.inputStream)).lines().forEach { println(it) }
             urls.clear()
         }
