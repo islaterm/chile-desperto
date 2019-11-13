@@ -1,6 +1,5 @@
 package com.github.islaterm
 
-import BBCParser
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.bot
 import me.ivmg.telegram.dispatch

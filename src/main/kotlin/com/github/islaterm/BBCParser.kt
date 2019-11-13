@@ -1,4 +1,5 @@
-import com.github.islaterm.UpdateHandler
+package com.github.islaterm
+
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.yaml.snakeyaml.Yaml
