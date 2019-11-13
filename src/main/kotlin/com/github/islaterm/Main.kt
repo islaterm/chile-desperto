@@ -42,11 +42,6 @@ class ChileDesperto {
         linksFile.createNewFile()
       }
       val bot = setupBot()
-      File("C:\\Users\\Ignacio\\Documents\\archivando").walk().forEach {
-        if (it.name.contains("html")) {
-          handler.parseUpdate(it.readText())
-        }
-      }
       programSyncTask()
       bot.startPolling()
     }
