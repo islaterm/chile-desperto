@@ -36,7 +36,7 @@ private val bbcParser = BBCParser(handler)
  * the bot via private messages or group chats.
  *
  * @author [Ignacio Slater Muñoz](islaterm@gmail.com)
- * @version 1.0
+ * @version 1.1
  */
 class ChileDesperto {
   companion object {
