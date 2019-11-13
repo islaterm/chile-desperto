@@ -14,7 +14,6 @@ import java.util.TimerTask
 import java.util.regex.Pattern
 import kotlin.concurrent.timer
 
-
 private val urlPattern: Pattern = Pattern.compile(
     "(?:^|[\\W])((ht|f)tp(s?)://|www\\.)(([\\w\\-]+\\.)+?([\\w\\-.~]+/?)*[\\p{Alnum}.,%_=?&#\\-+()\\[\\]*$~@!:/{};']*)",
     Pattern.CASE_INSENSITIVE or Pattern.MULTILINE or Pattern.DOTALL
@@ -43,6 +42,11 @@ class ChileDesperto {
         linksFile.createNewFile()
       }
       val bot = setupBot()
+      File("C:\\Users\\Ignacio\\Documents\\archivando").walk().forEach {
+        if (it.name.contains("html")) {
+          handler.parseUpdate(it.readText())
+        }
+      }
       programSyncTask()
       bot.startPolling()
     }
@@ -113,6 +117,7 @@ private class UpdateHandler {
   internal fun sync() {
     synchronized(this) {
       linksFile.appendText(urls.joinToString(System.lineSeparator()))
+      linksFile.appendText(System.lineSeparator())
       var process = runtime.exec("git status")
       BufferedReader(InputStreamReader(process.inputStream)).lines()
           .forEach { println(it) }
