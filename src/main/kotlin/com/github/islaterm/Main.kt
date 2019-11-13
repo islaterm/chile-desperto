@@ -132,7 +132,9 @@ internal class UpdateHandler {
   internal fun sync() {
     synchronized(this) {
       linksFile.appendText(urls.joinToString(System.lineSeparator()))
-      linksFile.appendText(System.lineSeparator())
+      if (urls.isNotEmpty()) {
+        linksFile.appendText(System.lineSeparator())
+      }
       var process = runtime.exec("git status")
       BufferedReader(InputStreamReader(process.inputStream)).lines()
           .forEach { println(it) }
