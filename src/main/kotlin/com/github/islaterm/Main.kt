@@ -90,10 +90,12 @@ class ChileDesperto {
           taskName, period = period,
           action = object : TimerTask(), (TimerTask) -> Unit {
             override fun run() {
+              println("Executing $taskName")
               action()
             }
 
             override fun invoke(p1: TimerTask) {
+              println("Executing $taskName")
               action()
             }
           })
@@ -133,18 +135,19 @@ internal class UpdateHandler {
       linksFile.appendText(urls.joinToString(System.lineSeparator()))
       if (urls.isNotEmpty()) {
         linksFile.appendText(System.lineSeparator())
+        println("Pushing changes")
       }
       var process = runtime.exec("git status")
-      BufferedReader(InputStreamReader(process.inputStream)).lines()
+      BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       process = runtime.exec("git commit -a -m \"Updated links\" ")
-      BufferedReader(InputStreamReader(process.inputStream)).lines()
+      BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       process = runtime.exec("git pull origin master")
-      BufferedReader(InputStreamReader(process.inputStream)).lines()
+      BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       process = runtime.exec("git push origin master")
-      BufferedReader(InputStreamReader(process.inputStream)).lines()
+      BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       urls.clear()
     }
