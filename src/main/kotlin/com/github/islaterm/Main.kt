@@ -72,7 +72,7 @@ class ChileDesperto {
      * Creates a periodic task to fetch news from bbc
      */
     private fun programScrapeTask() {
-      programTask("Scrape BBC", 3_600_000L, bbcParser::parseUrls)
+      programTask("Scrape BBC", 1_000L, bbcParser::parseUrls)
     }
 
     /**
