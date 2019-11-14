@@ -37,7 +37,7 @@ private val bbcParser = BBCParser(handler)
  * the bot via private messages or group chats.
  *
  * @author [Ignacio Slater Muñoz](islaterm@gmail.com)
- * @version 1.1.3
+ * @version 1.1.4
  */
 class ChileDesperto {
   companion object {
@@ -148,16 +148,20 @@ internal class UpdateHandler {
         linksFile.appendText(System.lineSeparator())
         println("Pushing changes")
       }
-      var process = runtime.exec("git add .")
+
+      var process = runtime.exec("git fetch")
+      BufferedReader(InputStreamReader(process.errorStream)).lines()
+          .forEach { println(it) }
+      process = runtime.exec("git add .")
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       process = runtime.exec("git commit -m \"Updated links\" ")
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
-      process = runtime.exec("git pull origin master")
+      process = runtime.exec("git pull")
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
-      process = runtime.exec("git push origin master")
+      process = runtime.exec("git push --all")
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       urls.clear()
