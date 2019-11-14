@@ -149,7 +149,7 @@ internal class UpdateHandler {
         println("Pushing changes")
       }
 
-      val process = runtime.exec("source ./git-sync.sh")
+      val process = runtime.exec("sh git-sync.sh")
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       urls.clear()
