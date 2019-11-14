@@ -35,7 +35,7 @@ private val bbcParser = BBCParser(handler)
  * the bot via private messages or group chats.
  *
  * @author [Ignacio Slater Muñoz](islaterm@gmail.com)
- * @version 1.1
+ * @version 1.1.1
  */
 class ChileDesperto {
   companion object {
@@ -72,7 +72,7 @@ class ChileDesperto {
      * Creates a periodic task to fetch news from bbc
      */
     private fun programScrapeTask() {
-      programTask("Scrape BBC", 1_000L, bbcParser::parseUrls)
+      programTask("Scrape BBC", 3_600_000L, bbcParser::parseUrls)
     }
 
     /**
