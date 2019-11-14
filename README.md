@@ -1,4 +1,4 @@
-# Chile despertó
+# Chile despertó 1.1
 
 Telegram bot that collects links to news, tweets, instagram posts, etc. about the 2019 Chilean protests.
 
@@ -7,6 +7,9 @@ If you want to send a link to the bot, just send a message with the link to @noe
 
 ## Periodic updates
 
-The ``links.txt`` file is updated every 5 minutes. 
+The ``links.txt`` file is updated **every 5 minutes**. 
 Since the sources of the links are multiple and to avoid an exesive use of RAM there's no previous checking of the links added so it's 
 likely to be duplicated links in the data.
+
+**Every 1 hour**, the bot searches for the news with the topic _Protestas en Chile_ from the BBC and adds the links to new articles to the 
+file  
