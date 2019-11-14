@@ -33,7 +33,7 @@ internal class BBCParser(private val updateHandler: UpdateHandler) {
       val pubDate =
           it.getElementsByClass("date date--v2")[0].attr("data-seconds").toLong()
       if (pubDate > updates[BBC_KEY]!!) {
-        links += "https://www.bbc.com/${it.getElementsByClass("title-link")[0].attr(
+        links += "https://www.bbc.com${it.getElementsByClass("title-link")[0].attr(
             "href"
         )}${System.lineSeparator()}"
         updates[BBC_KEY] = pubDate

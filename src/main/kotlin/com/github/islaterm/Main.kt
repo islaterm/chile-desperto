@@ -11,6 +11,8 @@ import org.yaml.snakeyaml.Yaml
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.TimerTask
 import java.util.regex.Pattern
 import kotlin.concurrent.timer
@@ -35,7 +37,7 @@ private val bbcParser = BBCParser(handler)
  * the bot via private messages or group chats.
  *
  * @author [Ignacio Slater Muñoz](islaterm@gmail.com)
- * @version 1.1.1
+ * @version 1.1.2
  */
 class ChileDesperto {
   companion object {
@@ -90,12 +92,21 @@ class ChileDesperto {
           taskName, period = period,
           action = object : TimerTask(), (TimerTask) -> Unit {
             override fun run() {
-              println("Executing $taskName")
-              action()
+              update()
             }
 
             override fun invoke(p1: TimerTask) {
+              update()
+            }
+
+            private fun update() {
+              val currentTime = System.currentTimeMillis()
               println("Executing $taskName")
+              val format = SimpleDateFormat("dd-MM-yyyy HH:mm")
+              val lastUpdate = Date(currentTime)
+              val nextUpdate = Date(currentTime + period)
+              println("Current time: ${format.format(lastUpdate)}")
+              println("Next execution of $taskName: ${format.format(nextUpdate)}")
               action()
             }
           })
