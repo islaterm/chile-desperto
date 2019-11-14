@@ -1,5 +1,6 @@
 package com.github.islaterm
 
+import com.github.islaterm.scrapping.BBCScrapper
 import me.ivmg.telegram.Bot
 import me.ivmg.telegram.bot
 import me.ivmg.telegram.dispatch
@@ -28,7 +29,7 @@ private val tokenMap: Map<String, String> =
 private val handler = UpdateHandler()
 private val urls = mutableSetOf<String>()
 private val linksFile = File("links.txt")
-private val bbcParser = BBCParser(handler)
+private val bbcParser = BBCScrapper(handler)
 
 /**
  * Main class of Chile Despertó Telegram bot.
@@ -74,7 +75,7 @@ class ChileDesperto {
      * Creates a periodic task to fetch news from bbc
      */
     private fun programScrapeTask() {
-      programTask("Scrape BBC", 3_600_000L, bbcParser::parseUrls)
+      programTask("Scrape BBC", 3_600_000L, bbcParser::parseSite)
     }
 
     /**
