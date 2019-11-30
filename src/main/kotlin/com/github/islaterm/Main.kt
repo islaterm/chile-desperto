@@ -38,7 +38,7 @@ private val bbcParser = BBCScrapper(handler)
  * the bot via private messages or group chats.
  *
  * @author [Ignacio Slater Muñoz](islaterm@gmail.com)
- * @version 1.1.5
+ * @version 1.2.2
  */
 class ChileDesperto {
   companion object {
@@ -149,8 +149,12 @@ internal class UpdateHandler {
         linksFile.appendText(System.lineSeparator())
         println("Pushing changes")
       }
-
-      val process = runtime.exec("sh git-sync.sh")
+      val os = System.getProperty("os.name")
+      val process = when {
+        os.contains("win", true) -> runtime.exec(". git-sync.ps1")
+        os.contains("nix", true) -> runtime.exec("sh git-sync.sh")
+        else                     -> runtime.exec("")
+      }
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
       urls.clear()
