@@ -2,6 +2,7 @@ package com.github.islaterm.scrapping
 
 
 import com.github.islaterm.UpdateHandler
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -24,9 +25,13 @@ internal class BBCScrapper(updateHandler: UpdateHandler) :
 
   override val baseUrl = "https://www.bbc.com"
   private val topicLink = "$baseUrl/mundo/topics/f835c135-a54a-4670-8bfc-05938c5f6489"
-  private val document: Document = Jsoup
-      .connect(topicLink)
-      .get()
+  private val document: Document = try {
+    Jsoup
+        .connect(topicLink)
+        .get()
+  } catch (ex: HttpStatusException) {
+    Document("")
+  }
 
   init {
     if (!updates.contains(UPDATE_KEY)) {
@@ -36,18 +41,22 @@ internal class BBCScrapper(updateHandler: UpdateHandler) :
 
   override fun parseSite() {
     var links = ""
-    val mainColumn = document.getElementsByClass("column--primary")[0]
-    mainColumn.getElementsByClass("eagle-item__body").reversed().forEach {
-      val pubDate =
-          it.getElementsByClass("date date--v2")[0].attr("data-seconds").toLong()
-      if (pubDate > updates[UPDATE_KEY]!!) {
-        links += "https://www.bbc.com${it.getElementsByClass("title-link")[0].attr(
-            "href"
-        )}${System.lineSeparator()}"
-        updates[UPDATE_KEY] = pubDate
+    try {
+      val mainColumn = document.getElementsByClass("column--primary")[0]
+      mainColumn.getElementsByClass("eagle-item__body").reversed().forEach {
+        val pubDate =
+            it.getElementsByClass("date date--v2")[0].attr("data-seconds").toLong()
+        if (pubDate > updates[UPDATE_KEY]!!) {
+          links += "https://www.bbc.com${it.getElementsByClass("title-link")[0].attr(
+              "href"
+          )}${System.lineSeparator()}"
+          updates[UPDATE_KEY] = pubDate
+        }
       }
+      updatesFile.writeText(yaml.dump(updates))
+      updateHandler.parseUpdate(links)
+    } catch (ex: IndexOutOfBoundsException) {
+      println(ex.message)
     }
-    updatesFile.writeText(yaml.dump(updates))
-    updateHandler.parseUpdate(links)
   }
 }
