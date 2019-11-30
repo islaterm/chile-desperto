@@ -152,8 +152,7 @@ internal class UpdateHandler {
       val os = System.getProperty("os.name")
       val process = when {
         os.contains("win", true) -> runtime.exec("powershell.exe .\\git-sync.ps1")
-        os.contains("nix", true) -> runtime.exec("sh git-sync.sh")
-        else                     -> runtime.exec("")
+        else                     -> runtime.exec("sh git-sync.sh")
       }
       BufferedReader(InputStreamReader(process.errorStream)).lines()
           .forEach { println(it) }
